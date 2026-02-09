@@ -92,6 +92,7 @@
       cursor: pointer;
       font-weight: 600;
       font-size: 14px;
+      font-family: "Montserrat", sans-serif;
     }
 
     button:hover {
@@ -110,7 +111,7 @@
 <body>
 
 <div class="container">
-  <h1>🏷️ Générateur officiel de naming – Meta Ads</h1>
+  <h1>🏷️ Générateur de naming – Meta Ads</h1>
 
   <div class="rules">
     Format : MARQUE - Campus - Campagne - Cible - Destination - Plateforme - Année - Langue (si ≠ FR)
@@ -145,8 +146,8 @@
     </div>
 
     <div>
-      <label>Campagne</label>
-      <input id="campagne" placeholder="PGE, JPO, MBA, Alternance..." />
+        <label>Campagne</label>
+        <input id="campagne" placeholder="PGE, JPO, MBA, Alternance..." />
     </div>
 
     <div>
@@ -193,11 +194,14 @@
 
     <div>
       <label>Année</label>
-      <input id="annee" disabled />
+      <select id="annee">
+        <option value="2026">2026</option>
+        <option value="2026">2027</option>
+        </select>
     </div>
 
     <div class="full">
-      <label>Résultat final</label>
+      <label>Form name :</label>
       <div id="result" class="result">—</div>
     </div>
 
