@@ -2,10 +2,20 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+    
+
   <title>Générateur Naming Meta Ads</title>
+
+  
+
   <style>
+
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: 'Montserrat', sans-serif;
       background: #f8f9fb;
       padding: 24px;
       color: #1f2937;
@@ -111,7 +121,7 @@
     <div>
       <label>Marque</label>
       <select id="marque">
-        <option value="">—</option>
+        <option value=""></option>
         <option>3A</option>
         <option>EPSI</option>
         <option>ESAIL</option>
@@ -131,18 +141,18 @@
 
     <div>
       <label>Campus (multi-campus autorisé)</label>
-      <input id="campus" placeholder="Lyon / Montpellier" />
+      <input id="campus" placeholder="Ville / Natio / Multicampus" />
     </div>
 
     <div>
       <label>Campagne</label>
-      <input id="campagne" placeholder="PGE, JPO2026, MBA, Alternance..." />
+      <input id="campagne" placeholder="PGE, JPO, MBA, Alternance..." />
     </div>
 
     <div>
       <label>Cible</label>
       <select id="cible">
-        <option value="">—</option>
+        <option value=""></option>
         <option>Etudiant</option>
         <option>Parent</option>
         <option>Mix</option>
@@ -153,19 +163,20 @@
     <div>
       <label>Destination</label>
       <select id="destination">
-        <option value="">—</option>
+        <option value=""></option>
         <option>Brochure</option>
-        <option>Inscription</option>
-        <option>RDV</option>
-        <option>Contact</option>
-        <option>JPO</option>
+        <option>Guide des metiers</option>
+        <option>/homepage</option>
+        <option>/programmes</option>
+        <option>/actualites</option>
+        <option>/campus</option>
       </select>
     </div>
 
     <div>
       <label>Plateforme</label>
       <select id="plateforme">
-        <option value="">—</option>
+        <option value=""></option>
         <option>meta</option>
         <option>ig</option>
         <option>fb</option>
@@ -177,9 +188,6 @@
       <select id="langue">
         <option value="FR">FR</option>
         <option value="EN">EN</option>
-        <option value="ES">ES</option>
-        <option value="DE">DE</option>
-        <option value="IT">IT</option>
       </select>
     </div>
 
@@ -238,7 +246,7 @@
     const text = document.getElementById("result").innerText;
     if (text === "—") return;
     navigator.clipboard.writeText(text);
-    alert("Naming copié !");
+    alert("Naming copié, C&D !");
   }
 </script>
 
