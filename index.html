@@ -1,109 +1,440 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-    
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Générateur Naming Meta Ads</title>
 
-  
+  <!-- Font Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
+    /* ============================================
+       VARIABLES CSS - Thème clair/sombre
+    ============================================ */
+    :root {
+      --bg-primary: #fafbfc;
+      --bg-secondary: #ffffff;
+      --bg-tertiary: #f3f4f6;
+      --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --bg-glass: rgba(255, 255, 255, 0.8);
+      --border: rgba(0, 0, 0, 0.08);
+      --text-primary: #1a1a2e;
+      --text-secondary: #6b7280;
+      --text-tertiary: #9ca3af;
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
+      --accent: #667eea;
+      --success: #10b981;
+    }
 
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+    /* Mode sombre */
+    [data-theme="dark"] {
+      --bg-primary: #0f1419;
+      --bg-secondary: #1a1f2e;
+      --bg-tertiary: #252b3b;
+      --bg-glass: rgba(26, 31, 46, 0.8);
+      --border: rgba(255, 255, 255, 0.1);
+      --text-primary: #f3f4f6;
+      --text-secondary: #d1d5db;
+      --text-tertiary: #9ca3af;
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.6);
+      --accent: #8b9bff;
+    }
 
+    /* ============================================
+       BASE
+    ============================================ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     body {
-      font-family: 'Montserrat', sans-serif;
-      background: #f8f9fb;
-      padding: 24px;
-      color: #1f2937;
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      padding: 20px;
+      min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(102, 126, 234, 0.1) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(118, 75, 162, 0.1) 0px, transparent 50%);
     }
 
+    [data-theme="dark"] body {
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(139, 155, 255, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(118, 75, 162, 0.15) 0px, transparent 50%);
+    }
+
+    /* ============================================
+       CONTAINER - Glassmorphism
+    ============================================ */
     .container {
-      max-width: 780px;
-      margin: auto;
-      background: #ffffff;
-      border-radius: 14px;
-      padding: 26px 30px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+      max-width: 900px;
+      margin: 40px auto;
+      background: var(--bg-glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: var(--shadow-lg);
+      animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    h1 {
-      font-size: 22px;
-      margin-bottom: 16px;
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
+    /* ============================================
+       HEADER
+    ============================================ */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      background: var(--bg-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .theme-toggle {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 20px;
+    }
+
+    .theme-toggle:hover {
+      background: var(--bg-secondary);
+      transform: scale(1.05);
+    }
+
+    /* ============================================
+       RÈGLES
+    ============================================ */
+    .rules {
+      background: var(--bg-tertiary);
+      border-left: 3px solid var(--accent);
+      padding: 16px 20px;
+      border-radius: 12px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    /* ============================================
+       FORMULAIRE
+    ============================================ */
     .grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-bottom: 32px;
     }
 
-    label {
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .field label {
       font-size: 13px;
       font-weight: 600;
-      display: block;
-      margin-bottom: 4px;
+      color: var(--text-secondary);
+      transition: color 0.2s ease;
+    }
+
+    .field.filled label {
+      color: var(--accent);
     }
 
     input, select {
       width: 100%;
-      padding: 10px 12px;
-      border: 1px solid #e5e7eb;
-      border-radius: 8px;
+      padding: 12px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
       font-size: 14px;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      transition: all 0.2s ease;
+      outline: none;
     }
 
     input:focus, select:focus {
-      outline: none;
-      border-color: #ff5a00;
-      box-shadow: 0 0 0 1px #ff5a00;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      transform: translateY(-1px);
     }
 
-    .full {
-      grid-column: span 2;
+    [data-theme="dark"] input:focus,
+    [data-theme="dark"] select:focus {
+      box-shadow: 0 0 0 3px rgba(139, 155, 255, 0.15);
     }
 
-    .result {
-      margin-top: 20px;
-      padding: 14px;
-      border-radius: 8px;
-      background: #f1f5f9;
+    input:hover:not(:focus), 
+    select:hover:not(:focus) {
+      border-color: var(--text-tertiary);
+    }
+
+    input::placeholder {
+      color: var(--text-tertiary);
+    }
+
+    select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 40px;
+    }
+
+    /* ============================================
+       RÉSULTAT
+    ============================================ */
+    .result-section {
+      background: var(--bg-gradient);
+      padding: 2px;
+      border-radius: 16px;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .result-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transform: rotate(45deg);
+      animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+
+    .result-inner {
+      background: var(--bg-secondary);
+      padding: 24px;
+      border-radius: 14px;
+      position: relative;
+    }
+
+    .result-label {
+      font-size: 12px;
       font-weight: 600;
-      text-align: center;
-      font-size: 15px;
-      word-break: break-all;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-tertiary);
+      margin-bottom: 12px;
     }
 
+    .result-text {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      word-break: break-word;
+      line-height: 1.6;
+      min-height: 24px;
+      font-family: 'Monaco', 'Courier New', monospace;
+      transition: all 0.3s ease;
+    }
+
+    .result-text.empty {
+      color: var(--text-tertiary);
+    }
+
+    /* ============================================
+       BOUTONS
+    ============================================ */
     .actions {
       display: flex;
+      gap: 12px;
       justify-content: flex-end;
-      margin-top: 12px;
+      flex-wrap: wrap;
     }
 
     button {
-      background: #ff5a00;
+      background: var(--bg-gradient);
       border: none;
-      color: #fff;
-      padding: 10px 16px;
-      border-radius: 8px;
+      color: white;
+      padding: 14px 28px;
+      border-radius: 12px;
       cursor: pointer;
       font-weight: 600;
       font-size: 14px;
       font-family: "Montserrat", sans-serif;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
     }
 
     button:hover {
-      background: #e94f00;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
     }
 
-    .rules {
+    button:active {
+      transform: translateY(0);
+    }
+
+    .btn-reset {
+      background: var(--bg-tertiary);
+      color: var(--text-secondary);
+      box-shadow: none;
+    }
+
+    .btn-reset:hover {
+      background: var(--bg-secondary);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ============================================
+       TOAST
+    ============================================ */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 280px;
+      backdrop-filter: blur(20px);
+      z-index: 1000;
+      animation: slideInRight 0.3s ease;
+    }
+
+    @keyframes slideInRight {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .toast.hiding {
+      animation: slideOutRight 0.3s ease forwards;
+    }
+
+    @keyframes slideOutRight {
+      to {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+    }
+
+    .toast-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .toast-title {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-primary);
+    }
+
+    .toast-message {
       font-size: 12px;
-      color: #6b7280;
-      margin-bottom: 16px;
-      line-height: 1.4;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .toast-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      background: var(--success);
+      border-radius: 0 0 12px 12px;
+      animation: progress 3s linear forwards;
+    }
+
+    @keyframes progress {
+      from { width: 100%; }
+      to { width: 0%; }
+    }
+
+    /* ============================================
+       RESPONSIVE
+    ============================================ */
+    @media (max-width: 768px) {
+      body {
+        padding: 12px;
+      }
+
+      .container {
+        padding: 24px;
+        margin: 20px auto;
+        border-radius: 20px;
+      }
+
+      .header h1 {
+        font-size: 24px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .actions {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      button {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .toast {
+        right: 12px;
+        left: 12px;
+        min-width: auto;
+      }
     }
   </style>
 </head>
@@ -111,18 +442,28 @@
 <body>
 
 <div class="container">
-  <h1>🏷️ Générateur de naming – Meta Ads</h1>
-
-  <div class="rules">
-    Format : MARQUE - Campus - Campagne - Cible - Destination - Plateforme - Année - Langue (si ≠ FR)
+  
+  <!-- Header -->
+  <div class="header">
+    <h1>🏷️ Générateur Naming Meta Ads</h1>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+      🌙
+    </button>
   </div>
 
+  <!-- Règles -->
+  <div class="rules">
+    <strong>Format :</strong> MARQUE - Campus - Campagne - Cible - Destination - Plateforme - Année - Langue (si ≠ FR)
+  </div>
+
+  <!-- Formulaire -->
   <div class="grid">
 
-    <div>
-      <label>Marque</label>
+    <!-- Marque -->
+    <div class="field" id="field-marque">
+      <label for="marque">Marque</label>
       <select id="marque">
-        <option value=""></option>
+        <option value="">Sélectionner...</option>
         <option>3A</option>
         <option>EPSI</option>
         <option>ESAIL</option>
@@ -140,20 +481,23 @@
       </select>
     </div>
 
-    <div>
-      <label>Campus (multi-campus autorisé)</label>
-      <input id="campus" placeholder="Ville / Natio / Multicampus" />
+    <!-- Campus -->
+    <div class="field" id="field-campus">
+      <label for="campus">Campus</label>
+      <input id="campus" type="text" placeholder="Paris, Natio, Multicampus...">
     </div>
 
-    <div>
-        <label>Campagne</label>
-        <input id="campagne" placeholder="PGE, JPO, MBA, Alternance..." />
+    <!-- Campagne -->
+    <div class="field" id="field-campagne">
+      <label for="campagne">Campagne</label>
+      <input id="campagne" type="text" placeholder="PGE, JPO, MBA, Alternance...">
     </div>
 
-    <div>
-      <label>Cible</label>
+    <!-- Cible -->
+    <div class="field" id="field-cible">
+      <label for="cible">Cible</label>
       <select id="cible">
-        <option value=""></option>
+        <option value="">Sélectionner...</option>
         <option>Etudiant</option>
         <option>Parent</option>
         <option>Mix</option>
@@ -161,10 +505,11 @@
       </select>
     </div>
 
-    <div>
-      <label>Destination</label>
+    <!-- Destination -->
+    <div class="field" id="field-destination">
+      <label for="destination">Destination</label>
       <select id="destination">
-        <option value=""></option>
+        <option value="">Sélectionner...</option>
         <option>Brochure</option>
         <option>Guide des metiers</option>
         <option>/homepage</option>
@@ -174,84 +519,299 @@
       </select>
     </div>
 
-    <div>
-      <label>Plateforme</label>
+    <!-- Plateforme -->
+    <div class="field" id="field-plateforme">
+      <label for="plateforme">Plateforme</label>
       <select id="plateforme">
-        <option value=""></option>
+        <option value="">Sélectionner...</option>
         <option>meta</option>
         <option>ig</option>
         <option>fb</option>
       </select>
     </div>
 
-    <div>
-      <label>Langue</label>
+    <!-- Langue -->
+    <div class="field" id="field-langue">
+      <label for="langue">Langue</label>
       <select id="langue">
         <option value="FR">FR</option>
         <option value="EN">EN</option>
       </select>
     </div>
 
-    <div>
-      <label>Année</label>
+    <!-- Année -->
+    <div class="field" id="field-annee">
+      <label for="annee">Année</label>
       <select id="annee">
+        <option value="2025">2025</option>
         <option value="2026">2026</option>
-        <option value="2026">2027</option>
-        </select>
-    </div>
-
-    <div class="full">
-      <label>Form name :</label>
-      <div id="result" class="result">—</div>
+        <option value="2027">2027</option>
+      </select>
     </div>
 
   </div>
 
+  <!-- Résultat -->
+  <div class="result-section">
+    <div class="result-inner">
+      <div class="result-label">✨ Naming généré</div>
+      <div id="result" class="result-text empty">
+        Remplissez les champs pour générer le naming...
+      </div>
+    </div>
+  </div>
+
+  <!-- Actions -->
   <div class="actions">
-    <button onclick="copyNaming()">Copier</button>
+    <button class="btn-reset" id="btnReset">🔄 Réinitialiser</button>
+    <button id="btnCopy">📋 Copier le naming</button>
   </div>
 
 </div>
 
 <script>
-  const fields = ["marque", "campus", "campagne", "cible", "destination", "plateforme", "langue"];
+(function() {
+  'use strict';
 
-  const annee = new Date().getFullYear();
-  document.getElementById("annee").value = annee;
+  // ============================================
+  // VARIABLES
+  // ============================================
+  const fields = {
+    marque: document.getElementById('marque'),
+    campus: document.getElementById('campus'),
+    campagne: document.getElementById('campagne'),
+    cible: document.getElementById('cible'),
+    destination: document.getElementById('destination'),
+    plateforme: document.getElementById('plateforme'),
+    langue: document.getElementById('langue'),
+    annee: document.getElementById('annee')
+  };
 
-  fields.forEach(id => {
-    document.getElementById(id).addEventListener("input", generate);
-  });
+  const resultElement = document.getElementById('result');
+  const btnCopy = document.getElementById('btnCopy');
+  const btnReset = document.getElementById('btnReset');
+  const themeToggle = document.getElementById('themeToggle');
 
+  // ============================================
+  // INITIALISATION
+  // ============================================
+  function init() {
+    // Définir l'année actuelle
+    const currentYear = new Date().getFullYear();
+    fields.annee.value = currentYear;
+
+    // Charger le thème sauvegardé
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+
+    // Ajouter les événements
+    setupEventListeners();
+  }
+
+  // ============================================
+  // ÉVÉNEMENTS
+  // ============================================
+  function setupEventListeners() {
+    // Événements sur les champs
+    Object.keys(fields).forEach(function(key) {
+      const field = fields[key];
+      
+      field.addEventListener('input', generate);
+      field.addEventListener('change', generate);
+      
+      // Gestion du state "filled"
+      field.addEventListener('input', function() {
+        const fieldContainer = document.getElementById('field-' + key);
+        if (field.value.trim()) {
+          fieldContainer.classList.add('filled');
+        } else {
+          fieldContainer.classList.remove('filled');
+        }
+      });
+    });
+
+    // Bouton copier
+    btnCopy.addEventListener('click', copyNaming);
+
+    // Bouton reset
+    btnReset.addEventListener('click', resetForm);
+
+    // Toggle thème
+    themeToggle.addEventListener('click', toggleTheme);
+  }
+
+  // ============================================
+  // GÉNÉRATION DU NAMING
+  // ============================================
   function generate() {
-    const marque = document.getElementById("marque").value.trim();
-    const campus = document.getElementById("campus").value.trim();
-    const campagne = document.getElementById("campagne").value.trim();
-    const cible = document.getElementById("cible").value;
-    const dest = document.getElementById("destination").value;
-    const plat = document.getElementById("plateforme").value;
-    const langue = document.getElementById("langue").value;
+    const marque = fields.marque.value.trim();
+    const campus = fields.campus.value.trim();
+    const campagne = fields.campagne.value.trim();
+    const cible = fields.cible.value.trim();
+    const dest = fields.destination.value.trim();
+    const plat = fields.plateforme.value.trim();
+    const langue = fields.langue.value.trim();
+    const annee = fields.annee.value.trim();
 
+    // Validation
     if (!marque || !campus || !campagne || !cible || !dest || !plat) {
-      document.getElementById("result").innerText = "—";
+      resultElement.textContent = 'Remplissez les champs pour générer le naming...';
+      resultElement.classList.add('empty');
       return;
     }
 
-    let result = `${marque} - ${campus} - ${campagne} - ${cible} - ${dest} - ${plat} - ${annee}`;
+    // Construction du naming
+    let result = marque + ' - ' + campus + ' - ' + campagne + ' - ' + cible + ' - ' + dest + ' - ' + plat + ' - ' + annee;
 
-    if (langue !== "FR") {
-      result += ` - ${langue}`;
+    // Ajout de la langue si différente de FR
+    if (langue !== 'FR') {
+      result += ' - ' + langue;
     }
 
-    document.getElementById("result").innerText = result;
+    // Affichage
+    resultElement.textContent = result;
+    resultElement.classList.remove('empty');
   }
 
+  // ============================================
+  // COPIE DU NAMING
+  // ============================================
   function copyNaming() {
-    const text = document.getElementById("result").innerText;
-    if (text === "—") return;
-    navigator.clipboard.writeText(text);
-    alert("Naming copié, C&D !");
+    const text = resultElement.textContent;
+
+    if (!text || text === 'Remplissez les champs pour générer le naming...') {
+      showToast('⚠️ Erreur', 'Veuillez d\'abord générer un naming');
+      return;
+    }
+
+    // Copie dans le presse-papiers
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text)
+        .then(function() {
+          showToast('✅ Copié !', 'Le naming a été copié dans votre presse-papiers');
+        })
+        .catch(function(err) {
+          console.error('Erreur de copie:', err);
+          showToast('❌ Erreur', 'Impossible de copier le texte');
+        });
+    } else {
+      // Fallback pour les navigateurs anciens
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        showToast('✅ Copié !', 'Le naming a été copié dans votre presse-papiers');
+      } catch (err) {
+        showToast('❌ Erreur', 'Impossible de copier le texte');
+      }
+      document.body.removeChild(textArea);
+    }
   }
+
+  // ============================================
+  // RÉINITIALISATION
+  // ============================================
+  function resetForm() {
+    fields.marque.value = '';
+    fields.campus.value = '';
+    fields.campagne.value = '';
+    fields.cible.value = '';
+    fields.destination.value = '';
+    fields.plateforme.value = '';
+    fields.langue.value = 'FR';
+    fields.annee.value = new Date().getFullYear();
+
+    // Retirer les classes "filled"
+    Object.keys(fields).forEach(function(key) {
+      const fieldContainer = document.getElementById('field-' + key);
+      if (fieldContainer) {
+        fieldContainer.classList.remove('filled');
+      }
+    });
+
+    // Réinitialiser le résultat
+    resultElement.textContent = 'Remplissez les champs pour générer le naming...';
+    resultElement.classList.add('empty');
+
+    showToast('🔄 Réinitialisé', 'Le formulaire a été réinitialisé');
+  }
+
+  // ============================================
+  // TOGGLE THÈME
+  // ============================================
+  function toggleTheme() {
+    const html = document.documentElement;
+    const currentTheme = html.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    html.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateThemeIcon(newTheme);
+  }
+
+  function updateThemeIcon(theme) {
+    themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+
+  // ============================================
+  // TOAST NOTIFICATION
+  // ============================================
+  function showToast(title, message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    
+    const icon = document.createElement('div');
+    icon.className = 'toast-icon';
+    icon.textContent = title.charAt(0);
+    
+    const content = document.createElement('div');
+    
+    const toastTitle = document.createElement('div');
+    toastTitle.className = 'toast-title';
+    toastTitle.textContent = title;
+    
+    const toastMessage = document.createElement('div');
+    toastMessage.className = 'toast-message';
+    toastMessage.textContent = message;
+    
+    content.appendChild(toastTitle);
+    content.appendChild(toastMessage);
+    
+    const progress = document.createElement('div');
+    progress.className = 'toast-progress';
+    
+    toast.appendChild(icon);
+    toast.appendChild(content);
+    toast.appendChild(progress);
+    
+    document.body.appendChild(toast);
+
+    // Suppression automatique
+    setTimeout(function() {
+      toast.classList.add('hiding');
+      setTimeout(function() {
+        if (toast.parentNode) {
+          document.body.removeChild(toast);
+        }
+      }, 300);
+    }, 3000);
+  }
+
+  // ============================================
+  // LANCEMENT
+  // ============================================
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+})();
 </script>
 
 </body>
